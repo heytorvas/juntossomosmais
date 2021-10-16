@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+  api2:
+    container_name: api2
+    build: ./api/
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api/:/usr/src/juntossomosmais/api
+    env_file:
+      - .env
