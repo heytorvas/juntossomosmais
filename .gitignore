@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 
-api/
+const.py
+scraper.py
 
 README.md
