@@ -5,6 +5,13 @@ def get_users_json():
     r = requests.get("https://storage.googleapis.com/juntossomosmais-code-challenge/input-backend.json").json()
     return r
 
+def get_regions_json():
+    r = requests.get("https://raw.githubusercontent.com/Tubaleviao/estados-regioes-json/master/estado-regiao.json").json()
+    
+    # fix bug from gist
+    r[6]["Região"] = "Centro-Oeste"
+    return r
+
 def phone_formatter(phone):
     return "+55" + phone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "").strip()
 
@@ -29,9 +36,15 @@ def set_user_category(user):
 def set_user_gender(user):
     return "F" if user['gender'] == 'female' else "M"
 
+def set_user_region(user, regions):
+    for region in regions:
+        if str(user['location']['state']).lower().strip() == str(region['Nome']).lower().strip():
+            return str(region['Região']).lower()
+
 def get_updated_users():
     users_updated = []
     users = get_users_json()['results']
+    regions = get_regions_json()
     for user in range(len(users)):
         updated = {
             "type": set_user_category(users[user]),
@@ -50,7 +63,7 @@ def get_updated_users():
             "picture": users[user]['picture'],
             "nationality": "BR"
         }
+        updated["location"]["region"] = set_user_region(users[user], regions)
         users_updated.append(updated)
     
-    # return json.dumps(users_updated,  ensure_ascii=False)
     return users_updated
