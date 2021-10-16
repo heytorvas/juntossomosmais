@@ -1,7 +1,7 @@
 version: '3.0'
 services:
-  api2:
-    container_name: api2
+  web:
+    container_name: web
     build: ./api/
     command: sh -c "python manage.py runserver 0.0.0.0:8000"
     ports:

@@ -2,7 +2,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from api.scraper import get_updated_users
+# from api.scraper import get_updated_users
+from api.apps import data
 
 class UsersAPIView(APIView):
 
@@ -12,30 +13,30 @@ class UsersAPIView(APIView):
         region = str(request.GET.get('region', '')).lower()
         type = str(request.GET.get('type', '')).lower()
 
-        data = get_updated_users()
+        updated_users = data
 
         if region != '' and type != '':
             aux = []
-            for user in data:
+            for user in updated_users:
                 if user['location']['region'] == region and user['type'] == type:
                     aux.append(user)
-            data = aux
+            updated_users = aux
 
         if region != '' and type == '':
             aux = []
-            for user in data:
+            for user in updated_users:
                 if user['location']['region'] == region:
                     aux.append(user)
-            data = aux
+            updated_users = aux
 
         if region == '' and type != '':
             aux = []
-            for user in data:
+            for user in updated_users:
                 if user['type'] == type:
                     aux.append(user)
-            data = aux
+            updated_users = aux
 
-        total = len(data)
+        total = len(updated_users)
         start = (page - 1) * page_size
         end = page * page_size
 
@@ -43,5 +44,5 @@ class UsersAPIView(APIView):
             "pageNumber": page,
             "pageSize": page_size,
             "totalCount": total,
-            "users": data[start:end]
+            "users": updated_users[start:end]
         })

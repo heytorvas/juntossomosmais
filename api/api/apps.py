@@ -1,9 +1,11 @@
 from django.apps import AppConfig
-from scraper import get_updated_users
+from api.scraper import get_updated_users
+
+data = None
 
 class UserConfig(AppConfig):
-    name = 'user'
+    name = 'api'
 
     def ready(self):
-        global users
-        users = get_updated_users()
+        global data
+        data = get_updated_users()
