@@ -3,7 +3,7 @@ from api.const import NORMAL, SPECIAL1, SPECIAL2
 
 def get_users_json():
     r = requests.get("https://storage.googleapis.com/juntossomosmais-code-challenge/input-backend.json").json()
-    return r
+    return r['results']
 
 def get_regions_json():
     r = requests.get("https://raw.githubusercontent.com/Tubaleviao/estados-regioes-json/master/estado-regiao.json").json()
@@ -43,7 +43,7 @@ def set_user_region(user, regions):
 
 def get_updated_users():
     users_updated = []
-    users = get_users_json()['results']
+    users = get_users_json()
     regions = get_regions_json()
     for user in range(len(users)):
         updated = {

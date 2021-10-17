@@ -1,20 +1,22 @@
-# from django.views.generic.base import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-# from api.scraper import get_updated_users
 from api.apps import data
 
 class UsersAPIView(APIView):
 
     def get(self, request):
+
+        # metadata from request
         page = int(request.GET.get('page', 1))
         page_size = int(request.GET.get('size', 10))
         region = str(request.GET.get('region', '')).lower()
         type = str(request.GET.get('type', '')).lower()
 
+        # manipulating loaded data from memory
         updated_users = data
 
+        # trying filters
         if region != '' and type != '':
             aux = []
             for user in updated_users:
@@ -36,6 +38,7 @@ class UsersAPIView(APIView):
                     aux.append(user)
             updated_users = aux
 
+        # pagination
         total = len(updated_users)
         start = (page - 1) * page_size
         end = page * page_size
