@@ -18,7 +18,23 @@ from django.urls import path, include
 
 from api.views import UsersAPIView
 
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="API Docs",
+        default_version="v1",
+        description="API Documentation for JS+ Code Challenge",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny, ),
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', UsersAPIView.as_view(), name="users")
+    path('api/users/', UsersAPIView.as_view(), name="users"),
+    path('api/docs/', schema_view.with_ui('swagger', cache_timeout=0)),
 ]

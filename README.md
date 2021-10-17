@@ -23,3 +23,14 @@ docker-compose up &
 
 ## Notes
 Run project: ```http://localhost:8000/users```
+
+## Tests
+```bash
+docker ps -a
+```
+```bash
+docker exec -it $CONTAINER_ID /bin/bash
+```
+```bash
+python3 manage.py test
+```
