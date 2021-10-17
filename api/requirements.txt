@@ -3,3 +3,5 @@ djangorestframework
 requests
 shapely
 drf-yasg
+
+gunicorn

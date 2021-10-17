@@ -1,0 +1,28 @@
+version: '3.0'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web_prod
+    links:
+      - web_prod:web_prod
+    volumes:
+      - production_static_data:/vol/static
+
+  web_prod:
+    container_name: web_prod
+    build: ./api/
+    command: sh -c "gunicorn api.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api/:/usr/src/juntossomosmais/api
+      - production_static_data:/vol/web
+    env_file:
+      - prod.env
+
+volumes:
+  production_static_data:
+      
