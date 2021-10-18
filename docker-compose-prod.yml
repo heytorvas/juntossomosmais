@@ -9,7 +9,9 @@ services:
     links:
       - web_prod:web_prod
     volumes:
-      - production_static_data:/vol/static
+      - static_volume:/usr/src/juntossomosmais/api/static
+    networks:
+      - nginx_network
 
   web_prod:
     container_name: web_prod
@@ -19,10 +21,15 @@ services:
       - "8000:8000"
     volumes:
       - ./api/:/usr/src/juntossomosmais/api
-      - production_static_data:/vol/web
+      - static_volume:/usr/src/juntossomosmais/api/static
     env_file:
       - prod.env
+    networks:
+      - nginx_network
 
 volumes:
-  production_static_data:
-      
+  static_volume:
+
+networks:
+  nginx_network:
+    driver: bridge

@@ -1,5 +1,3 @@
-# change {project} for your project's name
-
 FROM python:3.9
 ENV PYTHONUNBUFFERED=1
 
