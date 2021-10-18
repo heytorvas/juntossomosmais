@@ -10,7 +10,6 @@ git clone https://github.com/heytorvas/juntossomosmais.git
 ```bash
 cd juntossomosmais
 ```
-
 ## Development Environment
 1. Build the containers:
 ```bash
@@ -19,6 +18,16 @@ docker-compose build
 2. Up the containers:
 ```bash
 docker-compose up &
+```
+
+## Production Environment
+1. Build the containers:
+```bash
+docker-compose -f docker-compose-prod.yml build
+```
+2. Up the containers:
+```bash
+docker-compose -f docker-compose-prod.yml up &
 ```
 
 ## Notes
